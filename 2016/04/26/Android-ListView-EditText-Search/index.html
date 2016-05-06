@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android ListView用EditText实现搜索功能 | tonycheng93的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言最近在开发一个IM项目的时候有一个需求就是，好友搜索功能。即在EditText中输入好友名字，ListView列表中动态展示刷选的好友列表。我把这个功能抽取出来了，先贴一下效果图：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android ListView用EditText实现搜索功能">
+<meta property="og:url" content="http://tonycheng93.github.io/2016/04/26/Android-ListView-EditText-Search/index.html">
+<meta property="og:site_name" content="tonycheng93的博客">
+<meta property="og:description" content="前言最近在开发一个IM项目的时候有一个需求就是，好友搜索功能。即在EditText中输入好友名字，ListView列表中动态展示刷选的好友列表。我把这个功能抽取出来了，先贴一下效果图：">
+<meta property="og:image" content="http://i.imgur.com/cpfPXLo.gif">
+<meta property="og:image" content="http://i.imgur.com/WsOSkQd.png">
+<meta property="og:updated_time" content="2016-04-26T08:39:38.813Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android ListView用EditText实现搜索功能">
+<meta name="twitter:description" content="前言最近在开发一个IM项目的时候有一个需求就是，好友搜索功能。即在EditText中输入好友名字，ListView列表中动态展示刷选的好友列表。我把这个功能抽取出来了，先贴一下效果图：">
+<meta name="twitter:image" content="http://i.imgur.com/cpfPXLo.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="tonycheng93的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+      <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  
+  
+  
+      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+  
+  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.9/clipboard.min.js"></script>
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false,
+          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"
+      }
+  </script>
+
+  
+      <script>
+          yiliaConfig.rootUrl = "/";
+      </script>
+  
+
+  
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">tonycheng93</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">爱生活！爱运动！爱编程！</p>
+        
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/3003319445/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1/" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/tonycheng93/" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/explore" title="知乎"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Develop-Tools/">Android Develop Tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EditText/">EditText</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Filter/">Filter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Map/">Map</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/tonycheng93/">我的cnblog博客</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://litten.github.io/">Litten的博客</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">酷爱编程，爱足球的Android开发程序员</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">tonycheng93</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">tonycheng93</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">爱生活！爱运动！爱编程！</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/3003319445/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1/" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/tonycheng93/" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/explore" title="知乎"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Android-ListView-EditText-Search" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/26/Android-ListView-EditText-Search/" class="article-date">
+      <time datetime="2016-04-26T07:28:43.000Z" itemprop="datePublished">2016-04-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android ListView用EditText实现搜索功能
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EditText/">EditText</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Filter/">Filter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ListView/">ListView</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p></p><h2 id="intro">前言</h2>最近在开发一个IM项目的时候有一个需求就是，好友搜索功能。即在EditText中输入好友名字，ListView列表中动态展示刷选的好友列表。我把这个功能抽取出来了，先贴一下效果图：<br><a id="more"></a><br><img src="http://i.imgur.com/cpfPXLo.gif" alt=""><img src="http://i.imgur.com/WsOSkQd.png" alt=""><p></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>在查阅资料以后，发现其实Android中已经帮我们实现了这个功能，如果你的ListView使用的是系统的ArrayAdapter，那么恭喜你，下面的事情就很简单了，你只需要调用下面的代码就可以实现了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">searchEdittext.addTextChangedListener(<span class="keyword">new</span> TextWatcher() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTextChanged</span><span class="params">(CharSequence cs, <span class="keyword">int</span> arg1, <span class="keyword">int</span> arg2, <span class="keyword">int</span> arg3)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// When user change the text</span></span><br><span class="line">        mAdapter.getFilter().filter(cs);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeTextChanged</span><span class="params">(CharSequence cs, <span class="keyword">int</span> arg1, <span class="keyword">int</span> arg2, <span class="keyword">int</span> arg3)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterTextChanged</span><span class="params">(Editable arg0)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>你没看错，就一行 mAdapter.getFilter().filter(cs);便可以实现这个搜索功能。不过我相信大多数Adapter都是自定义的，基于这个需求，我去分析了下ArrayAdapter，发现它实现了Filterable接口，那么接下来的事情就比较简单了，就让我们自定的Adapter也去实现Filterable这个接口，不久可以实现这个需求了吗。下面贴出ArrayAdapter中显示过滤功能的关键代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayAdapter</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">BaseAdapter</span> <span class="keyword">implements</span> <span class="title">Filterable</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Contains the list of objects that represent the data of this ArrayAdapter.</span><br><span class="line">     * The content of this list is referred to as "the array" in the documentation.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;T&gt; mObjects;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Lock used to modify the content of &#123;<span class="doctag">@link</span> #mObjects&#125;. Any write operation</span><br><span class="line">     * performed on the array should be synchronized on this lock. This lock is also</span><br><span class="line">     * used by the filter (see &#123;<span class="doctag">@link</span> #getFilter()&#125; to make a synchronized copy of</span><br><span class="line">     * the original array of data.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object mLock = <span class="keyword">new</span> Object();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// A copy of the original mObjects array, initialized from and then used instead as soon as</span></span><br><span class="line">    <span class="comment">// the mFilter ArrayFilter is used. mObjects will then only contain the filtered values.</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;T&gt; mOriginalValues;</span><br><span class="line">    <span class="keyword">private</span> ArrayFilter mFilter;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Filter <span class="title">getFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mFilter == <span class="keyword">null</span>) &#123;</span><br><span class="line">            mFilter = <span class="keyword">new</span> ArrayFilter();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mFilter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * &lt;p&gt;An array filter constrains the content of the array adapter with</span><br><span class="line">     * a prefix. Each item that does not start with the supplied prefix</span><br><span class="line">     * is removed from the list.&lt;/p&gt;</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayFilter</span> <span class="keyword">extends</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> FilterResults <span class="title">performFiltering</span><span class="params">(CharSequence prefix)</span> </span>&#123;</span><br><span class="line">            FilterResults results = <span class="keyword">new</span> FilterResults();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (mOriginalValues == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (mLock) &#123;</span><br><span class="line">                    mOriginalValues = <span class="keyword">new</span> ArrayList&lt;T&gt;(mObjects);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (prefix == <span class="keyword">null</span> || prefix.length() == <span class="number">0</span>) &#123;</span><br><span class="line">                ArrayList&lt;T&gt; list;</span><br><span class="line">                <span class="keyword">synchronized</span> (mLock) &#123;</span><br><span class="line">                    list = <span class="keyword">new</span> ArrayList&lt;T&gt;(mOriginalValues);</span><br><span class="line">                &#125;</span><br><span class="line">                results.values = list;</span><br><span class="line">                results.count = list.size();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                String prefixString = prefix.toString().toLowerCase();</span><br><span class="line"></span><br><span class="line">                ArrayList&lt;T&gt; values;</span><br><span class="line">                <span class="keyword">synchronized</span> (mLock) &#123;</span><br><span class="line">                    values = <span class="keyword">new</span> ArrayList&lt;T&gt;(mOriginalValues);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> count = values.size();</span><br><span class="line">                <span class="keyword">final</span> ArrayList&lt;T&gt; newValues = <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">                    <span class="keyword">final</span> T value = values.get(i);</span><br><span class="line">                    <span class="keyword">final</span> String valueText = value.toString().toLowerCase();</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// First match against the whole, non-splitted value</span></span><br><span class="line">                    <span class="keyword">if</span> (valueText.startsWith(prefixString)) &#123;</span><br><span class="line">                        newValues.add(value);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">final</span> String[] words = valueText.split(<span class="string">" "</span>);</span><br><span class="line">                        <span class="keyword">final</span> <span class="keyword">int</span> wordCount = words.length;</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// Start at index 0, in case valueText starts with space(s)</span></span><br><span class="line">                        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; wordCount; k++) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (words[k].startsWith(prefixString)) &#123;</span><br><span class="line">                                newValues.add(value);</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                results.values = newValues;</span><br><span class="line">                results.count = newValues.size();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> results;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">publishResults</span><span class="params">(CharSequence constraint, FilterResults results)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//noinspection unchecked</span></span><br><span class="line">            mObjects = (List&lt;T&gt;) results.values;</span><br><span class="line">            <span class="keyword">if</span> (results.count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                notifyDataSetChanged();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                notifyDataSetInvalidated();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><blockquote>
+<ul>
+<li>首先写了一个Model（User）模拟数据</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> avatarResId;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">int</span> avatarResId, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.avatarResId = avatarResId;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAvatarResId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> avatarResId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAvatarResId</span><span class="params">(<span class="keyword">int</span> avatarResId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.avatarResId = avatarResId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>自定义一个Adapter（UserAdapter）继承自BaseAdapter，实现了Filterable接口，Adapter一些常见的处理，我都去掉了，这里主要讲讲Filterable这个接口。</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">    * Contains the list of objects that represent the data of this Adapter.</span><br><span class="line">    * Adapter数据源</span><br><span class="line">    */</span></span><br><span class="line">   <span class="keyword">private</span> List&lt;User&gt; mDatas;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//过滤相关</span></span><br><span class="line">   <span class="comment">/**</span><br><span class="line">    * This lock is also used by the filter</span><br><span class="line">    * (see &#123;<span class="doctag">@link</span> #getFilter()&#125; to make a synchronized copy of</span><br><span class="line">    * the original array of data.</span><br><span class="line">    * 过滤器上的锁可以同步复制原始数据。</span><br><span class="line">    * </span><br><span class="line">    */</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Object mLock = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line">   <span class="comment">// A copy of the original mObjects array, initialized from and then used instead as soon as</span></span><br><span class="line">   <span class="comment">// the mFilter ArrayFilter is used. mObjects will then only contain the filtered values.</span></span><br><span class="line">   <span class="comment">//对象数组的备份，当调用ArrayFilter的时候初始化和使用。此时，对象数组只包含已经过滤的数据。</span></span><br><span class="line">   <span class="keyword">private</span> ArrayList&lt;User&gt; mOriginalValues;</span><br><span class="line">   <span class="keyword">private</span> ArrayFilter mFilter;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Filter <span class="title">getFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (mFilter == <span class="keyword">null</span>) &#123;</span><br><span class="line">           mFilter = <span class="keyword">new</span> ArrayFilter();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> mFilter;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>写一个ArrayFilter类继承自Filter类，我们需要两个方法：</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行过滤的方法</span></span><br><span class="line"> <span class="function"><span class="keyword">protected</span> FilterResults <span class="title">performFiltering</span><span class="params">(CharSequence prefix)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//得到过滤结果</span></span><br><span class="line"> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">publishResults</span><span class="params">(CharSequence prefix, FilterResults results)</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>贴上完整的代码，注释已经写的不能再详细了</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span><br><span class="line">     * 过滤数据的类</span><br><span class="line">     */</span></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * &lt;p&gt;An array filter constrains the content of the array adapter with</span><br><span class="line">     * a prefix. Each item that does not start with the supplied prefix</span><br><span class="line">     * is removed from the list.&lt;/p&gt;</span><br><span class="line">     * &lt;p/&gt;</span><br><span class="line">     * 一个带有首字母约束的数组过滤器，每一项不是以该首字母开头的都会被移除该list。</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayFilter</span> <span class="keyword">extends</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">        <span class="comment">//执行刷选</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> FilterResults <span class="title">performFiltering</span><span class="params">(CharSequence prefix)</span> </span>&#123;</span><br><span class="line">            FilterResults results = <span class="keyword">new</span> FilterResults();<span class="comment">//过滤的结果</span></span><br><span class="line">            <span class="comment">//原始数据备份为空时，上锁，同步复制原始数据</span></span><br><span class="line">            <span class="keyword">if</span> (mOriginalValues == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (mLock) &#123;</span><br><span class="line">                    mOriginalValues = <span class="keyword">new</span> ArrayList&lt;&gt;(mDatas);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//当首字母为空时</span></span><br><span class="line">            <span class="keyword">if</span> (prefix == <span class="keyword">null</span> || prefix.length() == <span class="number">0</span>) &#123;</span><br><span class="line">                ArrayList&lt;User&gt; list;</span><br><span class="line">                <span class="keyword">synchronized</span> (mLock) &#123;<span class="comment">//同步复制一个原始备份数据</span></span><br><span class="line">                    list = <span class="keyword">new</span> ArrayList&lt;&gt;(mOriginalValues);</span><br><span class="line">                &#125;</span><br><span class="line">                results.values = list;</span><br><span class="line">                results.count = list.size();<span class="comment">//此时返回的results就是原始的数据，不进行过滤</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                String prefixString = prefix.toString().toLowerCase();<span class="comment">//转化为小写</span></span><br><span class="line"></span><br><span class="line">                ArrayList&lt;User&gt; values;</span><br><span class="line">                <span class="keyword">synchronized</span> (mLock) &#123;<span class="comment">//同步复制一个原始备份数据</span></span><br><span class="line">                    values = <span class="keyword">new</span> ArrayList&lt;&gt;(mOriginalValues);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> count = values.size();</span><br><span class="line">                <span class="keyword">final</span> ArrayList&lt;User&gt; newValues = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">                    <span class="keyword">final</span> User value = values.get(i);<span class="comment">//从List&lt;User&gt;中拿到User对象</span></span><br><span class="line"><span class="comment">//                    final String valueText = value.toString().toLowerCase();</span></span><br><span class="line">                    <span class="keyword">final</span> String valueText = value.getName().toString().toLowerCase();<span class="comment">//User对象的name属性作为过滤的参数</span></span><br><span class="line">                    <span class="comment">// First match against the whole, non-splitted value</span></span><br><span class="line">                    <span class="keyword">if</span> (valueText.startsWith(prefixString) || valueText.indexOf(prefixString.toString()) != -<span class="number">1</span>) &#123;<span class="comment">//第一个字符是否匹配</span></span><br><span class="line">                        newValues.add(value);<span class="comment">//将这个item加入到数组对象中</span></span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;<span class="comment">//处理首字符是空格</span></span><br><span class="line">                        <span class="keyword">final</span> String[] words = valueText.split(<span class="string">" "</span>);</span><br><span class="line">                        <span class="keyword">final</span> <span class="keyword">int</span> wordCount = words.length;</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// Start at index 0, in case valueText starts with space(s)</span></span><br><span class="line">                        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; wordCount; k++) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (words[k].startsWith(prefixString)) &#123;<span class="comment">//一旦找到匹配的就break，跳出for循环</span></span><br><span class="line">                                newValues.add(value);</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                results.values = newValues;<span class="comment">//此时的results就是过滤后的List&lt;User&gt;数组</span></span><br><span class="line">                results.count = newValues.size();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> results;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//刷选结果</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">publishResults</span><span class="params">(CharSequence prefix, FilterResults results)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//noinspection unchecked</span></span><br><span class="line">            mDatas = (List&lt;User&gt;) results.values;<span class="comment">//此时，Adapter数据源就是过滤后的Results</span></span><br><span class="line">            <span class="keyword">if</span> (results.count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                notifyDataSetChanged();<span class="comment">//这个相当于从mDatas中删除了一些数据，只是数据的变化，故使用notifyDataSetChanged()</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">/**</span><br><span class="line">                 * 数据容器变化 ----&gt; notifyDataSetInValidated</span><br><span class="line"></span><br><span class="line">                 容器中的数据变化  ----&gt;  notifyDataSetChanged</span><br><span class="line">                 */</span></span><br><span class="line">                notifyDataSetInvalidated();<span class="comment">//当results.count&lt;=0时，此时数据源就是重新new出来的，说明原始的数据源已经失效了</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="特别说明"><a href="#特别说明" class="headerlink" title="特别说明"></a>特别说明</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//User对象的name属性作为过滤的参数</span></span><br><span class="line">  <span class="keyword">final</span> String valueText = value.getName().toString().toLowerCase();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个地方是，你要进行搜索的关键字，比如我这里使用的是User对象的Name属性，就是把用户名当作关键字来进行过滤筛选的。这里要根据你自己的具体逻辑来进行设置。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (valueText.startsWith(prefixString) || valueText.indexOf(prefixString.toString()) != -<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这里进行关键字匹配，如果你只想使用第一个字符匹配，那么你只需要使用这行代码就可以了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首字符匹配</span></span><br><span class="line">valueText.startsWith(prefixString)</span><br></pre></td></tr></table></figure></p>
+<p>如果你的需求是只要输入的字符出现在ListView列表中，那么该item就要显示出来，那么你就需要这行代码了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//你输入的关键字包含在了某个item中，位置不做考虑，即可以不是第一个字符</span></span><br><span class="line">valueText.indexOf(prefixString.toString()) != -<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>这样就完成了一个EditText + ListView实现搜索的功能。我在demo中用两种方法实现了这一效果。第一种是系统的ArrayAdapter实现，第二种是自定义Adapter实现。有需要的可以看看，我已经把Demo上传到了我的github上面。<br>Github地址：<a href="https://github.com/tonycheng93/EditSearch" target="_blank" rel="external">https://github.com/tonycheng93/EditSearch</a><br>博客地址：<a href="http://tonycheng93.github.io/">http://tonycheng93.github.io/</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/04/26/Android-ListView-EditText-Search/">Android ListView用EditText实现搜索功能</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">tonycheng93</a></p>
+        <p><span>发布时间:</span>2016-04-26, 15:28:43</p>
+        <p><span>最后更新:</span>2016-04-26, 16:39:38</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/04/26/Android-ListView-EditText-Search/" title="Android ListView用EditText实现搜索功能">http://tonycheng93.github.io/2016/04/26/Android-ListView-EditText-Search/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://tonycheng93.github.io/2016/04/26/Android-ListView-EditText-Search/　　作者: tonycheng93" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/05/06/hello-world/">
+                    Hello World
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/03/31/obtain-android-studio-sha1/">
+                    百度地图开发-获取Android Studio数字签名（SHA1）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">3.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特别说明"><span class="toc-number">4.</span> <span class="toc-text">特别说明</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Android ListView用EditText实现搜索功能　| tonycheng93的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/04/26/Android-ListView-EditText-Search/" data-title="Android ListView用EditText实现搜索功能" data-url="http://tonycheng93.github.io/2016/04/26/Android-ListView-EditText-Search/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"tonycheng93"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/05/06/hello-world/" title="上一篇: Hello World">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/03/31/obtain-android-studio-sha1/" title="下一篇: 百度地图开发-获取Android Studio数字签名（SHA1）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/Android-ListView-EditText-Search/">Android ListView用EditText实现搜索功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/31/obtain-android-studio-sha1/">百度地图开发-获取Android Studio数字签名（SHA1）</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 tonycheng93
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

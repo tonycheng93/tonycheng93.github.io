@@ -3,21 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | tonycheng93的博客</title>
+  <title>百度地图开发-获取Android Studio数字签名（SHA1） | tonycheng93的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+  <meta name="description" content="前言简单记录自己开发百度地图过程中，在创建应用获取Baidu Key时需要填入数字签名(SHA1)，eclipse下获取SHA1非常方便，转到Android Studio后获取的方法变得稍微复杂了一点，这里做下记录。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://tonycheng93.github.io/2016/05/06/hello-world/index.html">
+<meta property="og:title" content="百度地图开发-获取Android Studio数字签名（SHA1）">
+<meta property="og:url" content="http://tonycheng93.github.io/2016/03/31/obtain-android-studio-sha1/index.html">
 <meta property="og:site_name" content="tonycheng93的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-05-06T09:02:06.968Z">
+<meta property="og:description" content="前言简单记录自己开发百度地图过程中，在创建应用获取Baidu Key时需要填入数字签名(SHA1)，eclipse下获取SHA1非常方便，转到Android Studio后获取的方法变得稍微复杂了一点，这里做下记录。">
+<meta property="og:image" content="http://i.imgur.com/3viRzCl.png">
+<meta property="og:image" content="http://i.imgur.com/23uSDu6.png">
+<meta property="og:image" content="http://i.imgur.com/mQmU6Fl.png">
+<meta property="og:updated_time" content="2016-04-07T02:50:44.453Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="百度地图开发-获取Android Studio数字签名（SHA1）">
+<meta name="twitter:description" content="前言简单记录自己开发百度地图过程中，在创建应用获取Baidu Key时需要填入数字签名(SHA1)，eclipse下获取SHA1非常方便，转到Android Studio后获取的方法变得稍微复杂了一点，这里做下记录。">
+<meta name="twitter:image" content="http://i.imgur.com/3viRzCl.png">
   
     <link rel="alternative" href="/atom.xml" title="tonycheng93的博客" type="application/atom+xml">
   
@@ -234,11 +235,11 @@ Quick">
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-obtain-android-studio-sha1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/06/hello-world/" class="article-date">
-      <time datetime="2016-05-06T09:02:06.965Z" itemprop="datePublished">2016-05-06</time>
+      <a href="/2016/03/31/obtain-android-studio-sha1/" class="article-date">
+      <time datetime="2016-03-31T06:38:01.000Z" itemprop="datePublished">2016-03-31</time>
 </a>
     </div>
   
@@ -251,7 +252,7 @@ Quick">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      百度地图开发-获取Android Studio数字签名（SHA1）
     </h1>
   
 
@@ -259,8 +260,16 @@ Quick">
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Android开发笔记/">Android开发笔记</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Develop-Tools/">Android Develop Tools</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Map/">Map</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -268,15 +277,10 @@ Quick">
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p></p><h2 id="intro">前言</h2>简单记录自己开发百度地图过程中，在创建应用<a href="http://lbsyun.baidu.com/apiconsole/key/create" target="_blank" rel="external">获取Baidu Key</a>时需要填入数字签名(SHA1)，eclipse下获取SHA1非常方便，转到Android Studio后获取的方法变得稍微复杂了一点，这里做下记录。<br><img src="http://i.imgur.com/3viRzCl.png" alt=""><br><a id="more"></a><p></p>
+<h2 id="Android-Studio下获取数字签名-SHA1"><a href="#Android-Studio下获取数字签名-SHA1" class="headerlink" title="Android Studio下获取数字签名(SHA1)"></a>Android Studio下获取数字签名(SHA1)</h2><blockquote>
+<p>1、打开Android Studio下面的Terminal或者打开系统控制台；<br>2、输入”C:\Program Files\Java\jre1.8.0_51\bin\keytool.exe” -list -v -keystore “C:\Users\cheng.android\debug.keystore”(其中keytool的路径是自己java环境变量，后面是debug.keystore的路径，一般在user目录下面)；<br><img src="http://i.imgur.com/23uSDu6.png" alt=""><br>3、输入密钥库口令：一般默认：android。<br><img src="http://i.imgur.com/mQmU6Fl.png" alt=""><br>完成上述步骤之后，就可以获取Android Studio的数字签名（SHA1）了。</p>
+</blockquote>
 
       
     </div>
@@ -285,13 +289,13 @@ Quick">
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/05/06/hello-world/">Hello World</a></p>
+        <p><span>本文标题:</span><a href="/2016/03/31/obtain-android-studio-sha1/">百度地图开发-获取Android Studio数字签名（SHA1）</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">tonycheng93</a></p>
-        <p><span>发布时间:</span>2016-05-06, 17:02:06</p>
-        <p><span>最后更新:</span>2016-05-06, 17:02:06</p>
+        <p><span>发布时间:</span>2016-03-31, 14:38:01</p>
+        <p><span>最后更新:</span>2016-04-07, 10:50:44</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/06/hello-world/" title="Hello World">http://tonycheng93.github.io/2016/05/06/hello-world/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://tonycheng93.github.io/2016/05/06/hello-world/　　作者: tonycheng93" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/03/31/obtain-android-studio-sha1/" title="百度地图开发-获取Android Studio数字签名（SHA1）">http://tonycheng93.github.io/2016/03/31/obtain-android-studio-sha1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://tonycheng93.github.io/2016/03/31/obtain-android-studio-sha1/　　作者: tonycheng93" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -303,12 +307,12 @@ Quick">
 
     <nav id="article-nav">
         
-        
-            <div id="article-nav-older" class="article-nav-title">
+            <div id="article-nav-newer" class="article-nav-title">
                 <a href="/2016/04/26/Android-ListView-EditText-Search/">
                     Android ListView用EditText实现搜索功能
                 </a>
             </div>
+        
         
     </nav>
 
@@ -317,7 +321,7 @@ Quick">
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-Studio下获取数字签名-SHA1"><span class="toc-number">2.</span> <span class="toc-text">Android Studio下获取数字签名(SHA1)</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -374,7 +378,7 @@ Quick">
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Hello World　| tonycheng93的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"百度地图开发-获取Android Studio数字签名（SHA1）　| tonycheng93的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -390,7 +394,7 @@ Quick">
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/05/06/hello-world/" data-title="Hello World" data-url="http://tonycheng93.github.io/2016/05/06/hello-world/"></div>
+    <div class="ds-thread" data-thread-key="2016/03/31/obtain-android-studio-sha1/" data-title="百度地图开发-获取Android Studio数字签名（SHA1）" data-url="http://tonycheng93.github.io/2016/03/31/obtain-android-studio-sha1/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -414,15 +418,15 @@ Quick">
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/04/26/Android-ListView-EditText-Search/" title="上一篇: Android ListView用EditText实现搜索功能">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/04/26/Android-ListView-EditText-Search/" title="下一篇: Android ListView用EditText实现搜索功能">
-                <i class="fa fa-angle-right"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
     </div>
 
