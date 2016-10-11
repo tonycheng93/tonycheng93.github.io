@@ -254,7 +254,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/11/fragment to fragment/">&lt;center&gt;Fragments之间的交互(实现参数传递)&lt;/center&gt;</a>
+      <a class="article-title" href="/2016/10/11/fragment to fragment/">Fragments之间的交互(实现参数传递)</a>
     </h1>
   
 
@@ -264,10 +264,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <pre><code>日常开发中，通常Fragments之间可能需要交互，比如基于用户事件改变Fragment的内容。所有Fragment之间的交互需要通过他们关联的Activity，两个Fragment之间不应该直接交互。
-
-采用接口回调的方式来实现Fragments之间的交互，大致分为四步：
-</code></pre><h2 id="1-定义一个接口"><a href="#1-定义一个接口" class="headerlink" title="1.定义一个接口"></a><center>1.定义一个接口</center></h2><blockquote>
+              <p>日常开发中，通常Fragments之间可能需要交互，比如基于用户事件改变Fragment的内容。所有Fragment之间的交互需要通过他们关联的Activity，两个Fragment之间不应该直接交互。</p>
+<p>采用接口回调的方式来实现Fragments之间的交互，大致分为四步：</p>
+<h2 id="1-定义一个接口"><a href="#1-定义一个接口" class="headerlink" title="1.定义一个接口"></a><center>1.定义一个接口</center></h2><blockquote>
 <ul>
 <li>为了让Fragment与Activity交互，可以在Fragment类中定义一个接口，并在Activity中实现。Fragment在它们的生命周期的onAttach()方法中获取接口的实现，然后调用接口的方法来与Activity交互。</li>
 </ul>
