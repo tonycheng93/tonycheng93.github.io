@@ -5,17 +5,17 @@
   
   <title>tonycheng93的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="MVP模式在Android中的应用在MVP模式中，View与Model并不直接交互，而是使用Presenter作为View与Model之间的桥梁。其中Presenter中同时持有View层以及Model层的接口引用，而View层持有Presenter层接口引用。当View层某个界面需要展示某些数据时，首先会调用Presenter层的某个接口，然后Presenter层会调用Model层请求数据，当M">
+  <meta name="description" content="在MVP模式中，View与Model并不直接交互，而是使用Presenter作为View与Model之间的桥梁。其中Presenter中同时持有View层以及Model层的接口引用，而View层持有Presenter层接口引用。当View层某个界面需要展示某些数据时，首先会调用Presenter层的某个接口，然后Presenter层会调用Model层请求数据，当Model层数据加载成功之后会调用P">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tonycheng93的博客">
-<meta property="og:url" content="http://tonycheng93.github.io/2016/10/11/2016-10-11.Android-MVP-Pattern/index.html">
+<meta property="og:url" content="http://tonycheng93.github.io/2016/10/11/Android-MVP-Pattern/index.html">
 <meta property="og:site_name" content="tonycheng93的博客">
-<meta property="og:description" content="MVP模式在Android中的应用在MVP模式中，View与Model并不直接交互，而是使用Presenter作为View与Model之间的桥梁。其中Presenter中同时持有View层以及Model层的接口引用，而View层持有Presenter层接口引用。当View层某个界面需要展示某些数据时，首先会调用Presenter层的某个接口，然后Presenter层会调用Model层请求数据，当M">
+<meta property="og:description" content="在MVP模式中，View与Model并不直接交互，而是使用Presenter作为View与Model之间的桥梁。其中Presenter中同时持有View层以及Model层的接口引用，而View层持有Presenter层接口引用。当View层某个界面需要展示某些数据时，首先会调用Presenter层的某个接口，然后Presenter层会调用Model层请求数据，当Model层数据加载成功之后会调用P">
 <meta property="og:image" content="http://i.imgur.com/1jiQrU1.png">
-<meta property="og:updated_time" content="2016-10-11T15:06:45.656Z">
+<meta property="og:updated_time" content="2016-10-11T15:10:42.530Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tonycheng93的博客">
-<meta name="twitter:description" content="MVP模式在Android中的应用在MVP模式中，View与Model并不直接交互，而是使用Presenter作为View与Model之间的桥梁。其中Presenter中同时持有View层以及Model层的接口引用，而View层持有Presenter层接口引用。当View层某个界面需要展示某些数据时，首先会调用Presenter层的某个接口，然后Presenter层会调用Model层请求数据，当M">
+<meta name="twitter:description" content="在MVP模式中，View与Model并不直接交互，而是使用Presenter作为View与Model之间的桥梁。其中Presenter中同时持有View层以及Model层的接口引用，而View层持有Presenter层接口引用。当View层某个界面需要展示某些数据时，首先会调用Presenter层的某个接口，然后Presenter层会调用Model层请求数据，当Model层数据加载成功之后会调用P">
 <meta name="twitter:image" content="http://i.imgur.com/1jiQrU1.png">
   
     <link rel="alternative" href="/atom.xml" title="tonycheng93的博客" type="application/atom+xml">
@@ -158,7 +158,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Develop-Tools/">Android Develop Tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Fragment/">Android Fragment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-SDK/">Android SDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EditText/">EditText</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Filter/">Filter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Map/">Map</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Develop-Tools/">Android Develop Tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Fragment/">Android Fragment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-MVP/">Android MVP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-SDK/">Android SDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EditText/">EditText</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Filter/">Filter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ListView/">ListView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Map/">Map</a></li></ul>
                     </div>
                 </section>
                 
@@ -233,11 +233,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-2016-10-11.Android-MVP-Pattern" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Android-MVP-Pattern" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/10/11/2016-10-11.Android-MVP-Pattern/" class="article-date">
-      <time datetime="2016-10-11T15:06:56.118Z" itemprop="datePublished">2016-10-11</time>
+      <a href="/2016/10/11/Android-MVP-Pattern/" class="article-date">
+      <time datetime="2016-10-11T15:10:28.000Z" itemprop="datePublished">2016-10-11</time>
 </a>
     </div>
   
@@ -249,8 +249,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="MVP模式在Android中的应用"><a href="#MVP模式在Android中的应用" class="headerlink" title="MVP模式在Android中的应用"></a><center>MVP模式在Android中的应用</center></h1><p>在MVP模式中，View与Model并不直接交互，而是使用Presenter作为View与Model之间的桥梁。其中Presenter中同时持有View层以及Model层的接口引用，而View层持有Presenter层接口引用。当View层某个界面需要展示某些数据时，首先会调用Presenter层的某个接口，然后Presenter层会调用Model层请求数据，当Model层数据加载成功之后会调用Presenter层的回调方法通知Presenter层数据加载完成，最后Presenter层再调用View层的接口将数据展示给用户。</p>
+        <p>在MVP模式中，View与Model并不直接交互，而是使用Presenter作为View与Model之间的桥梁。其中Presenter中同时持有View层以及Model层的接口引用，而View层持有Presenter层接口引用。当View层某个界面需要展示某些数据时，首先会调用Presenter层的某个接口，然后Presenter层会调用Model层请求数据，当Model层数据加载成功之后会调用Presenter层的回调方法通知Presenter层数据加载完成，最后Presenter层再调用View层的接口将数据展示给用户。</p>
 <p><img src="http://i.imgur.com/1jiQrU1.png" alt=""></p>
+<a id="more"></a>
 <h2 id="View层"><a href="#View层" class="headerlink" title="View层"></a><center>View层</center></h2><p>View层图片展示模块组件是Fragment，里面包含了一个SwipeRefreshLayout和RecyclerView。布局代码如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.v4.widget.SwipeRefreshLayout</span></span><br><span class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/swipe_refresh_widget"</span></span><br><span class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line">​</span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span><br><span class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/recycler_view"</span></span><br><span class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        <span class="attr">android:paddingTop</span>=<span class="string">"@dimen/card_margin"</span></span><br><span class="line">        <span class="attr">android:scrollbars</span>=<span class="string">"vertical"</span>&gt;</span><span class="tag">&lt;/<span class="name">android.support.v7.widget.RecyclerView</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.v4.widget.SwipeRefreshLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>​图片列表Fragment主要展示从网络获取的图片列表信息，View层的接口大致需要如下方法：</p>
 <blockquote>
@@ -279,13 +280,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/10/11/2016-10-11.Android-MVP-Pattern/"></a></p>
+        <p><span>本文标题:</span><a href="/2016/10/11/Android-MVP-Pattern/"></a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">tonycheng93</a></p>
-        <p><span>发布时间:</span>2016-10-11, 23:06:56</p>
-        <p><span>最后更新:</span>2016-10-11, 23:06:45</p>
+        <p><span>发布时间:</span>2016-10-11, 23:10:28</p>
+        <p><span>最后更新:</span>2016-10-11, 23:10:42</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/10/11/2016-10-11.Android-MVP-Pattern/" title="">http://tonycheng93.github.io/2016/10/11/2016-10-11.Android-MVP-Pattern/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://tonycheng93.github.io/2016/10/11/2016-10-11.Android-MVP-Pattern/　　作者: tonycheng93" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/11/Android-MVP-Pattern/" title="">http://tonycheng93.github.io/2016/10/11/Android-MVP-Pattern/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://tonycheng93.github.io/2016/10/11/Android-MVP-Pattern/　　作者: tonycheng93" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -311,7 +312,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MVP模式在Android中的应用"><span class="toc-number">1.</span> <span class="toc-text">MVP模式在Android中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#View层"><span class="toc-number">1.1.</span> <span class="toc-text">View层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Model层"><span class="toc-number">1.2.</span> <span class="toc-text">Model层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Presenter层"><span class="toc-number">1.3.</span> <span class="toc-text">Presenter层</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#View层"><span class="toc-number">1.</span> <span class="toc-text">View层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Model层"><span class="toc-number">2.</span> <span class="toc-text">Model层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Presenter层"><span class="toc-number">3.</span> <span class="toc-text">Presenter层</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -384,7 +385,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/10/11/2016-10-11.Android-MVP-Pattern/" data-title="" data-url="http://tonycheng93.github.io/2016/10/11/2016-10-11.Android-MVP-Pattern/"></div>
+    <div class="ds-thread" data-thread-key="2016/10/11/Android-MVP-Pattern/" data-title="" data-url="http://tonycheng93.github.io/2016/10/11/Android-MVP-Pattern/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -420,7 +421,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/2016-10-11.Android-MVP-Pattern/">2016-10-11.Android-MVP-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/fragment to fragment/">Fragments之间的交互(实现参数传递)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/21/a-fast-way-to-update-android-sdk/">一个快速更新Android SDK的方法（实测能达到1M+/s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/Android-ListView-EditText-Search/">Android ListView用EditText实现搜索功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/31/obtain-android-studio-sha1/">百度地图开发-获取Android Studio数字签名（SHA1）</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/Android-MVP-Pattern/">Android-MVP-Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/fragment to fragment/">Fragments之间的交互(实现参数传递)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/21/a-fast-way-to-update-android-sdk/">一个快速更新Android SDK的方法（实测能达到1M+/s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/Android-ListView-EditText-Search/">Android ListView用EditText实现搜索功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/31/obtain-android-studio-sha1/">百度地图开发-获取Android Studio数字签名（SHA1）</a></li></ul>
 
 
 
