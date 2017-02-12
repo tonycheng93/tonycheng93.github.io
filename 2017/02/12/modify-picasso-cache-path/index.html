@@ -3,22 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>百度地图开发-获取Android Studio数字签名（SHA1） | tonycheng93的博客</title>
+  <title>Picasso 修改缓存路径 | tonycheng93的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言简单记录自己开发百度地图过程中，在创建应用获取Baidu Key时需要填入数字签名(SHA1)，eclipse下获取SHA1非常方便，转到Android Studio后获取的方法变得稍微复杂了一点，这里做下记录。">
+  <meta name="description" content="Picasso 是 Square 公司开源的一个非常友好的图片加载框架，使用范围也比较广泛。具体的使用这里就不做介绍了，文章主要讲讲如何修改图片的缓存路径。Picasso默认的缓存路径位于data/data/your package name/cache/picasso-cache/下。开发过程中我们难免会遇到一些需求，需要我们去修改图片的缓存路径。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="百度地图开发-获取Android Studio数字签名（SHA1）">
-<meta property="og:url" content="http://tonycheng93.github.io/2016/03/31/obtain-android-studio-sha1/index.html">
+<meta property="og:title" content="Picasso 修改缓存路径">
+<meta property="og:url" content="http://tonycheng93.github.io/2017/02/12/modify-picasso-cache-path/index.html">
 <meta property="og:site_name" content="tonycheng93的博客">
-<meta property="og:description" content="前言简单记录自己开发百度地图过程中，在创建应用获取Baidu Key时需要填入数字签名(SHA1)，eclipse下获取SHA1非常方便，转到Android Studio后获取的方法变得稍微复杂了一点，这里做下记录。">
-<meta property="og:image" content="http://i.imgur.com/3viRzCl.png">
-<meta property="og:image" content="http://i.imgur.com/23uSDu6.png">
-<meta property="og:image" content="http://i.imgur.com/mQmU6Fl.png">
-<meta property="og:updated_time" content="2016-04-07T02:50:44.453Z">
+<meta property="og:description" content="Picasso 是 Square 公司开源的一个非常友好的图片加载框架，使用范围也比较广泛。具体的使用这里就不做介绍了，文章主要讲讲如何修改图片的缓存路径。Picasso默认的缓存路径位于data/data/your package name/cache/picasso-cache/下。开发过程中我们难免会遇到一些需求，需要我们去修改图片的缓存路径。">
+<meta property="og:updated_time" content="2017-02-12T13:54:22.028Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="百度地图开发-获取Android Studio数字签名（SHA1）">
-<meta name="twitter:description" content="前言简单记录自己开发百度地图过程中，在创建应用获取Baidu Key时需要填入数字签名(SHA1)，eclipse下获取SHA1非常方便，转到Android Studio后获取的方法变得稍微复杂了一点，这里做下记录。">
-<meta name="twitter:image" content="http://i.imgur.com/3viRzCl.png">
+<meta name="twitter:title" content="Picasso 修改缓存路径">
+<meta name="twitter:description" content="Picasso 是 Square 公司开源的一个非常友好的图片加载框架，使用范围也比较广泛。具体的使用这里就不做介绍了，文章主要讲讲如何修改图片的缓存路径。Picasso默认的缓存路径位于data/data/your package name/cache/picasso-cache/下。开发过程中我们难免会遇到一些需求，需要我们去修改图片的缓存路径。">
   
     <link rel="alternative" href="/atom.xml" title="tonycheng93的博客" type="application/atom+xml">
   
@@ -235,11 +231,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-obtain-android-studio-sha1" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-modify-picasso-cache-path" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/31/obtain-android-studio-sha1/" class="article-date">
-      <time datetime="2016-03-31T06:38:01.000Z" itemprop="datePublished">2016-03-31</time>
+      <a href="/2017/02/12/modify-picasso-cache-path/" class="article-date">
+      <time datetime="2017-02-12T13:53:08.000Z" itemprop="datePublished">2017-02-12</time>
 </a>
     </div>
   
@@ -252,7 +248,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      百度地图开发-获取Android Studio数字签名（SHA1）
+      Picasso 修改缓存路径
     </h1>
   
 
@@ -267,7 +263,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android-Develop-Tools/">Android Develop Tools</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Map/">Map</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Picasso/">Picasso</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -277,10 +273,14 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p></p><h2 id="intro">前言</h2>简单记录自己开发百度地图过程中，在创建应用<a href="http://lbsyun.baidu.com/apiconsole/key/create" target="_blank" rel="external">获取Baidu Key</a>时需要填入数字签名(SHA1)，eclipse下获取SHA1非常方便，转到Android Studio后获取的方法变得稍微复杂了一点，这里做下记录。<br><img src="http://i.imgur.com/3viRzCl.png" alt=""><br><a id="more"></a><p></p>
-<h2 id="Android-Studio下获取数字签名-SHA1"><a href="#Android-Studio下获取数字签名-SHA1" class="headerlink" title="Android Studio下获取数字签名(SHA1)"></a>Android Studio下获取数字签名(SHA1)</h2><blockquote>
-<p>1、打开Android Studio下面的Terminal或者打开系统控制台；<br>2、输入”C:\Program Files\Java\jre1.8.0_51\bin\keytool.exe” -list -v -keystore “C:\Users\cheng.android\debug.keystore”(其中keytool的路径是自己java环境变量，后面是debug.keystore的路径，一般在user目录下面)；<br><img src="http://i.imgur.com/23uSDu6.png" alt=""><br>3、输入密钥库口令：一般默认：android。<br><img src="http://i.imgur.com/mQmU6Fl.png" alt=""><br>完成上述步骤之后，就可以获取Android Studio的数字签名（SHA1）了。</p>
-</blockquote>
+        <p>Picasso 是 Square 公司开源的一个非常友好的图片加载框架，使用范围也比较广泛。具体的使用这里就不做介绍了，文章主要讲讲如何修改图片的缓存路径。Picasso默认的缓存路径位于<code>data/data/your package name/cache/picasso-cache/</code>下。开发过程中我们难免会遇到一些需求，需要我们去修改图片的缓存路径。<br><a id="more"></a></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>我们注意到，Picasso 底层其实是使用<code>OkHttp</code>去下载图片，同时在设置<code>Picasso</code>的时候，有一个<code>.downloader(Downloader downloader)</code>方法，我们可以传递进去一个<code>OkHttpDownloader( OkHttpClient client)</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Picasso picasso = <span class="keyword">new</span> Picasso.Builder(Context)</span><br><span class="line">             .downloader(<span class="keyword">new</span> OkHttpDownloader(client))</span><br><span class="line">             .build();</span><br></pre></td></tr></table></figure></p>
+<p>看到这里你可能已经想到了，我们给<code>OkHttpClient</code>设置<code>Cache</code>不就可以了吗，对，你没有猜错，实际就是这么干的。我们只需要给<code>OkHttpClient</code>设置<code>.cache(new Cache(file, maxSize))</code>就可以实现修改缓存路径了。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>废话不多说，直接上代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">"your cache path"</span>);</span><br><span class="line">       <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">           file.mkdirs();</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">long</span> maxSize = Runtime.getRuntime().maxMemory() / <span class="number">8</span>;<span class="comment">//设置图片缓存大小为运行时缓存的八分之一</span></span><br><span class="line">       OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder()</span><br><span class="line">               .cache(<span class="keyword">new</span> Cache(file, maxSize))</span><br><span class="line">               .build();</span><br><span class="line"></span><br><span class="line">       Picasso picasso = <span class="keyword">new</span> Picasso.Builder(<span class="keyword">this</span>)</span><br><span class="line">               .downloader(<span class="keyword">new</span> OkHttpDownloader(client))</span><br><span class="line">               .build();</span><br></pre></td></tr></table></figure></p>
+<p>没错就是这么简单，几行代码，你便成功的修改了缓存路径。但是。。。。，当你把<code>OkHttp</code>升级到<code>OkHttp3</code>的时候，你会发现给<code>downloader</code>设置<code>OkHttpDownloader()</code>的时候，发现它并不支持<code>OkHttp3</code>，这不是 shit 吗，不能因为这一个小问题，让我把<code>OkHttp3</code>替换成低版本吧。其实这是有办法解决的。</p>
+<h3 id="使用-OkHttp3Downloader"><a href="#使用-OkHttp3Downloader" class="headerlink" title="使用 OkHttp3Downloader"></a>使用 OkHttp3Downloader</h3><p>为了解决上面描述的不能使用<code>OkHttp3</code>作为下载器的问题，<code>Picasso</code>作者<code>jakewharton</code>大神专门写了一个<code>OkHttp3Downloader</code>库。使用也非常简单，在<code>Module dependencies</code>添加依赖：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'</span></span><br></pre></td></tr></table></figure></p>
+<p>然后设置<code>downloader</code>的时候改为<code>OkHttp3Downloader</code>即可：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">"your cache path"</span>);</span><br><span class="line">      <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">          file.mkdirs();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">long</span> maxSize = Runtime.getRuntime().maxMemory() / <span class="number">8</span>;<span class="comment">//设置图片缓存大小为运行时缓存的八分之一</span></span><br><span class="line">      OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder()</span><br><span class="line">              .cache(<span class="keyword">new</span> Cache(file, maxSize))</span><br><span class="line">              .build();</span><br><span class="line"></span><br><span class="line">      Picasso picasso = <span class="keyword">new</span> Picasso.Builder(<span class="keyword">this</span>)</span><br><span class="line">              .downloader(<span class="keyword">new</span> OkHttp3Downloader(client))<span class="comment">//注意此处替换为 OkHttp3Downloader</span></span><br><span class="line">              .build();</span><br></pre></td></tr></table></figure></p>
+<p>至此，我们就完成了<code>Picasso</code>缓存路径的修改。</p>
 
       
     </div>
@@ -289,13 +289,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/03/31/obtain-android-studio-sha1/">百度地图开发-获取Android Studio数字签名（SHA1）</a></p>
+        <p><span>本文标题:</span><a href="/2017/02/12/modify-picasso-cache-path/">Picasso 修改缓存路径</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">tonycheng93</a></p>
-        <p><span>发布时间:</span>2016-03-31, 14:38:01</p>
-        <p><span>最后更新:</span>2016-04-07, 10:50:44</p>
+        <p><span>发布时间:</span>2017-02-12, 21:53:08</p>
+        <p><span>最后更新:</span>2017-02-12, 21:54:22</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/03/31/obtain-android-studio-sha1/" title="百度地图开发-获取Android Studio数字签名（SHA1）">http://tonycheng93.github.io/2016/03/31/obtain-android-studio-sha1/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://tonycheng93.github.io/2016/03/31/obtain-android-studio-sha1/　　作者: tonycheng93" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/02/12/modify-picasso-cache-path/" title="Picasso 修改缓存路径">http://tonycheng93.github.io/2017/02/12/modify-picasso-cache-path/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://tonycheng93.github.io/2017/02/12/modify-picasso-cache-path/　　作者: tonycheng93" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -307,12 +307,12 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/04/26/Android-ListView-EditText-Search/">
-                    Android ListView用EditText实现搜索功能
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/01/13/greendao-base-use/">
+                    GreenDao 3.2.0 的基本使用
                 </a>
             </div>
-        
         
     </nav>
 
@@ -321,7 +321,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-Studio下获取数字签名-SHA1"><span class="toc-number">2.</span> <span class="toc-text">Android Studio下获取数字签名(SHA1)</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-OkHttp3Downloader"><span class="toc-number">3.</span> <span class="toc-text">使用 OkHttp3Downloader</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -378,7 +378,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"百度地图开发-获取Android Studio数字签名（SHA1）　| tonycheng93的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Picasso 修改缓存路径　| tonycheng93的博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -394,7 +394,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/03/31/obtain-android-studio-sha1/" data-title="百度地图开发-获取Android Studio数字签名（SHA1）" data-url="http://tonycheng93.github.io/2016/03/31/obtain-android-studio-sha1/"></div>
+    <div class="ds-thread" data-thread-key="2017/02/12/modify-picasso-cache-path/" data-title="Picasso 修改缓存路径" data-url="http://tonycheng93.github.io/2017/02/12/modify-picasso-cache-path/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -418,15 +418,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/04/26/Android-ListView-EditText-Search/" title="上一篇: Android ListView用EditText实现搜索功能">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2017/01/13/greendao-base-use/" title="下一篇: GreenDao 3.2.0 的基本使用">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 
